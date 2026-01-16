@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hồ sơ vay online</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #d71920;
+    }
+    h2 {
+      margin-top: 25px;
+      color: #333;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .row {
+      display: flex;
+      gap: 15px;
+    }
+    .row > div {
+      flex: 1;
+    }
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      background: #d71920;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #b5161c;
+    }
+    .note {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+    }
+      .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #d71920;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:15px;">
+    
+    </div>
+    <h1>ĐĂNG KÝ VAY HD SAISON </h1>
+
+    <form id="loanForm">
+      <h2>1. Thông tin cá nhân</h2>
+      <label>Họ và tên</label>
+      <input type="text" placeholder="Nguyễn Văn A" required />
+
+      <div class="row">
+        <div>
+          <label>Ngày sinh</label>
+          <input type="date" required />
+        </div>
+        <div>
+          <label>Giới tính</label>
+          <select>
+            <option>Nam</option>
+            <option>Nữ</option>
+          </select>
+        </div>
+      </div>
+
+      <label>CMND / CCCD</label>
+      <input type="text" placeholder="0123456789" required />
+
+      <label>Số điện thoại</label>
+      <input type="tel" placeholder="0xxx xxx xxx" required />
+
+      <label>Địa chỉ hiện tại</label>
+      <textarea rows="2"></textarea>
+
+      <h2>2. Thông tin công việc</h2>
+      <label>Nghề nghiệp</label>
+      <select>
+        <option>Nhân viên công ty</option>
+        <option>Công nhân</option>
+        <option>Kinh doanh tự do</option>
+        <option>Khác</option>
+      </select>
+
+      <label>Tên công ty / nơi làm việc</label>
+      <input type="text" />
+
+      <div class="row">
+        <div>
+          <label>Thu nhập / tháng (VNĐ)</label>
+          <input type="number" placeholder="8000000" />
+        </div>
+        <div>
+          <label>Thời gian làm việc (tháng)</label>
+          <input type="number" placeholder="12" />
+        </div>
+      </div>
+
+      <h2>3. Thông tin khoản vay</h2>
+      <div id="calcResult" style="margin-bottom:10px;color:#333;font-weight:bold;"></div>
+      <label>Số tiền cần vay (VNĐ)</label>
+      <input type="number" id="loanAmount" placeholder="20000000" />
+
+      <label>Thời hạn vay</label>
+      <select id="loanTerm">
+        <option value="6">6 tháng</option>
+        <option value="9">9 tháng</option>
+        <option value="12">12 tháng</option>
+        <option value="18">18 tháng</option>
+        <option value="24">24 tháng</option>
+        <option value="36">36 tháng</option>
+      </select>
+
+      <label>Mục đích vay</label>
+      <select>
+        <option>Tiêu dùng cá nhân</option>
+        <option>Mua xe</option>
+        <option>Mua điện thoại / điện máy</option>
+        <option>Khác</option>
+      </select>
+
+      <h2>4. Người tham chiếu</h2>
+      <label>Họ tên người tham chiếu 1 :</label>
+      <input type="text" />
+
+      <label>Số điện thoại người tham chiếu 1 :</label>
+      <input type="tel" />
+
+      <label>Họ tên người tham chiếu 2 :</label>
+      <input type="text" />
+
+      <label>Số điện thoại người tham chiếu 2 :</label>
+      <input type="tel" />      
+
+      <label style="margin-top:15px;">
+        <input type="checkbox" id="agree" required /> Tôi đồng ý với <strong>điều khoản & chính sách bảo mật</strong>
+      </label>
+
+      <button type="submit">GỬI HỒ SƠ VAY</button>
+
+      <div id="waiting" style="display:none;margin-top:20px;text-align:center;">
+        <div class="spinner"></div>
+        <h3 style="color:#d71920;">Hồ sơ đang được xử lý</h3>
+        <p>Vui lòng chờ kết quả xét duyệt từ HD SAISON.</p>
+      </div>
+
+      <div class="note">
+        Thông tin của bạn được bảo mật và chỉ dùng để tư vấn khoản vay.
+      </div>
+    </form>
+  </div>
+  <script>
+    const form = document.getElementById('loanForm');
+    const waiting = document.getElementById('waiting');
+    const amountInput = document.getElementById('loanAmount');
+    const termSelect = document.getElementById('loanTerm');
+    const calcResult = document.getElementById('calcResult');
+
+    function calculate() {
+      const amount = Number(amountInput.value);
+      const term = Number(termSelect.value);
+      if (!amount || !term) {
+        calcResult.innerText = '';
+        return;
+      }
+      const interestRate = 0.03; // 3%/tháng (mô phỏng)
+      const monthly = Math.round((amount + amount * interestRate * term) / term);
+      calcResult.innerText = `Ước tính trả góp: ${monthly.toLocaleString()} VNĐ / tháng`;
+    }
+
+    amountInput.addEventListener('input', calculate);
+    termSelect.addEventListener('change', calculate);
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      waiting.style.display = 'block';
+      form.querySelector('button').disabled = true;
+      form.querySelector('button').innerText = 'ĐANG XỬ LÝ...';
+
+      setTimeout(() => {
+        waiting.innerHTML = `
+          <h3 style="color:green;">Hồ sơ đã được tiếp nhận</h3>
+          <p>Nhân viên HD SAISON sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
+          <p><strong>Hotline:</strong> 1900 558 854</p>
+          <a href="https://zalo.me" target="_blank" style="display:inline-block;margin-top:10px;color:#d71920;font-weight:bold;">Liên hệ Zalo tư vấn</a>
+        `;
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
